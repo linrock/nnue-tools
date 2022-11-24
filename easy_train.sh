@@ -1,8 +1,7 @@
 #!/bin/bash
 
 python3 easy_train.py \
-  --training-dataset=/app/nodes5000pv2_UHO.binpack \
-  --validation-dataset=/app/nodes5000pv2_UHO.binpack \
+  --training-dataset=/root/data/Leela-dfrc_n5000.binpack \
   --gpus="0," \
   --experiment-name=2 \
   --start-lambda=1.0 \
