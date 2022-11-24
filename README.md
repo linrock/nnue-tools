@@ -29,6 +29,8 @@ Afterwards, use these scripts to prepare and run the container image.
 See training data files in this July 2022 PR:
 https://github.com/official-stockfish/Stockfish/pull/4100
 
+Info on how the training data is generated is in the [nnue-pytorch wiki](https://github.com/glinscott/nnue-pytorch/wiki/Training-datasets#lc0-data-converter).
+
 Use this [interleave_binpacks.py](https://github.com/official-stockfish/Stockfish/blob/tools/script/interleave_binpacks.py) script to
 mix downloaded `.binpack` files together to prepare training data.
 
