@@ -22,5 +22,7 @@ RUN git clone https://github.com/glinscott/nnue-pytorch /root/
 WORKDIR /root/nnue-pytorch
 RUN sh compile_data_loader.bat
 
+RUN echo "alias ls='ls --color=auto -X --group-directories-first'" >> ~/.bashrc
+
 WORKDIR /root
 CMD sleep infinity
