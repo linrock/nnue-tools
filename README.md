@@ -1,20 +1,30 @@
-## Stockfish NNUE trainer
+# Stockfish NNUE trainer
 
 A containerized linux environment for training Stockfish NNUE with
 [nnue-pytorch](https://github.com/glinscott/nnue-pytorch).
 
+The container image is Ubuntu 22.04 LTS with Cuda, Torch,
+and all the necessary dependencies for running nnue-pytorch
+installed.
+
+
+## Installing on Ubuntu 20.04 hosts
+
 To use this, make sure Nvidia drivers, [Docker](https://docs.docker.com/engine/install/),
 and the [Nvidia container toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html) are installed.
 
-The container image is an Ubuntu environment with Cuda, Torch,
-and all the necessary dependencies for running nnue-pytorch.
+See [server_setup.sh](./server_setup.sh) for commands to install dependencies
+pristine Ubuntu server environment.
+
+Afterwards, use these scripst to prepare and run the container image.
 
 ```bash
 ./docker_build.sh   # builds an image with a working nnue-pytorch environment
 ./docker_run.sh     # access the command-line within the container
 ```
 
-### Download data files
+
+### Download training data files
 
 See training data files in this PR:
 https://github.com/official-stockfish/Stockfish/pull/4100
