@@ -14,7 +14,7 @@ To use this, make sure Nvidia drivers, [Docker](https://docs.docker.com/engine/i
 and the [Nvidia container toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html) are installed.
 
 See [server_setup.sh](./server_setup.sh) for commands to install dependencies
-pristine Ubuntu server environment.
+from a clean Ubuntu server environment.
 
 Afterwards, use these scripts to prepare and run the container image.
 
@@ -24,13 +24,16 @@ Afterwards, use these scripts to prepare and run the container image.
 ```
 
 
-### Download training data files
+### Download training data
 
-See training data files in this PR:
+See training data files in this July 2022 PR:
 https://github.com/official-stockfish/Stockfish/pull/4100
 
+Use this [interleave_binpacks.py](https://github.com/official-stockfish/Stockfish/blob/tools/script/interleave_binpacks.py) script to
+mix downloaded `.binpack` files together to prepare training data.
 
-### Download large data files from Google Drive via cmd-line
+
+##### Download large data files from Google Drive via cmd-line
 
 - Go to [OAuth 2.0 Playground](https://developers.google.com/oauthplayground/)
 - In the "Input your own scopes" text box, enter in:
@@ -40,6 +43,6 @@ https://github.com/official-stockfish/Stockfish/pull/4100
 
 ```bash
 curl -H "Authorization: Bearer <access_token>" \
-  "https://www.googleapis.com/drive/v3/files/<file_id>?alt=media \
+  "https://www.googleapis.com/drive/v3/files/<file_id>?alt=media" \
   -o output.binpack
 ```
