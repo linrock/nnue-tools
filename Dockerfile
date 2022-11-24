@@ -6,9 +6,8 @@ ENV LIBRARY_PATH=/usr/local/cuda/lib64:${LIBRARY_PATH}
 ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64:${LD_LIBRARY_PATH}
 
 RUN apt update --fix-missing
-RUN apt install -y vim git
-RUN apt install -y python3 python3-dev python3-pip
-RUN DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt install -y cmake
+RUN DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt install -y \
+  vim git cmake wget curl python3 python3-dev python3-pip
 
 RUN pip3 install --no-cache --upgrade pip setuptools
 RUN --mount=type=cache,target=/root/.cache/pip pip3 install \
