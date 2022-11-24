@@ -14,7 +14,4 @@ python3 easy_train.py \
   --seed=$RANDOM \
   --max_epoch=800 \
   --auto-exit-timeout-on-training-finished=900 \
-  --network-testing-threads 8  \
-  --num-workers 48
-  # --engine-base-branch=official-stockfish/Stockfish/master \
-  # --engine-test-branch=official-stockfish/Stockfish/master
+  --network-testing-threads 8
