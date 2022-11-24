@@ -5,7 +5,6 @@ python3 easy_train.py \
   --validation-dataset=/app/nodes5000pv2_UHO.binpack \
   --gpus="0," \
   --experiment-name=2 \
-  --additional-training-arg=--param-index=2 \
   --start-lambda=1.0 \
   --end-lambda=0.75 \
   --gamma=0.995 \
