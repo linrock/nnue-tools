@@ -17,11 +17,10 @@ RUN --mount=type=cache,target=/root/.cache/pip pip3 install \
 
 RUN ln -sf python3 /usr/bin/python
 
-WORKDIR /app
-RUN git clone https://github.com/glinscott/nnue-pytorch
+RUN git clone https://github.com/glinscott/nnue-pytorch /root/
 
-WORKDIR /app/nnue-pytorch
+WORKDIR /root/nnue-pytorch
 RUN sh compile_data_loader.bat
 
-WORKDIR /app
+WORKDIR /root
 CMD sleep infinity
