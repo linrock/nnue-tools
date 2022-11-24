@@ -14,7 +14,7 @@ RUN pip3 install --no-cache --upgrade pip setuptools
 RUN --mount=type=cache,target=/root/.cache/pip \
   pip3 install torch --extra-index-url https://download.pytorch.org/whl/cu117
 RUN --mount=type=cache,target=/root/.cache/pip \
-  pip3 install psutil asciimatics pytorch-lightning GPUtil cupy-cuda117
+  pip3 install chess psutil asciimatics pytorch-lightning GPUtil cupy-cuda117
 
 RUN ln -sf python3 /usr/bin/python
 
