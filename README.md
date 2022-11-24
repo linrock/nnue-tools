@@ -16,7 +16,7 @@ and the [Nvidia container toolkit](https://docs.nvidia.com/datacenter/cloud-nati
 See [server_setup.sh](./server_setup.sh) for commands to install dependencies
 pristine Ubuntu server environment.
 
-Afterwards, use these scripst to prepare and run the container image.
+Afterwards, use these scripts to prepare and run the container image.
 
 ```bash
 ./docker_build.sh   # builds an image with a working nnue-pytorch environment
