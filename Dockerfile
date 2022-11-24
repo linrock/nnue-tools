@@ -21,4 +21,8 @@ RUN ln -sf python3 /usr/bin/python
 WORKDIR /app
 RUN git clone https://github.com/glinscott/nnue-pytorch
 
+WORKDIR /app/nnue-pytorch
+RUN sh compile_data_loader.bat
+
+WORKDIR /app
 CMD sleep infinity
