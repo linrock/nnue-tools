@@ -8,9 +8,8 @@ docker_container_id=$(docker run -d \
   nnue-pytorch)
 
 # Copy a usable easy_train.sh script in at runtime
-docker cp easy_train.sh $docker_container_id:/root/nnue-pytorch/scripts/
-docker exec -it $docker_container_id \
-  chmod +x /root/nnue-pytorch/scripts/easy_train.sh
+docker cp easy_train.sh $docker_container_id:/root/
+docker exec -it $docker_container_id chmod +x /root/easy_train.sh
 
 # Attach a bash shell to the running container
 docker exec -it $docker_container_id bash
