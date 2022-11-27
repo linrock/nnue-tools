@@ -3,8 +3,8 @@
 cd nnue-pytorch/scripts
 python3 easy_train.py \
   --training-dataset=/root/data/Leela-dfrc_n5000.binpack \
+  --experiment-name=1 \
   --gpus="0," \
-  --experiment-name=2 \
   --start-lambda=1.0 \
   --end-lambda=0.75 \
   --gamma=0.995 \
@@ -14,4 +14,5 @@ python3 easy_train.py \
   --seed=$RANDOM \
   --max_epoch=800 \
   --auto-exit-timeout-on-training-finished=900 \
-  --network-testing-threads 8
+  --network-testing-threads 8 \
+  --num-workers 12
