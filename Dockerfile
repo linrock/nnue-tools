@@ -5,7 +5,7 @@ ENV PATH=/usr/local/cuda/bin:${PATH}
 ENV LIBRARY_PATH=/usr/local/cuda/lib64:${LIBRARY_PATH}
 ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64:${LD_LIBRARY_PATH}
 
-RUN apt update --fix-missing
+RUN apt update
 RUN DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt install -y \
   vim git cmake wget curl python3 python3-pip
 
@@ -21,7 +21,8 @@ RUN git clone https://github.com/glinscott/nnue-pytorch /root/nnue-pytorch
 WORKDIR /root/nnue-pytorch
 RUN sh compile_data_loader.bat
 
-RUN echo "alias ls='ls --color=auto -X --group-directories-first'" >> ~/.bashrc
-
 WORKDIR /root
+COPY .bash_profile .
+RUN echo 'source .bash_profile' >> .bashrc
+
 CMD sleep infinity
