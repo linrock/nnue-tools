@@ -7,9 +7,9 @@ docker_container_id=$(docker run -d \
   --mount type=bind,source="$(pwd)"/easy_train_data,target=/root/easy_train_data \
   nnue-pytorch)
 
-# Copy a usable easy_train.sh script in at runtime
-docker cp easy_train.sh $docker_container_id:/root/
-docker exec -it $docker_container_id chmod +x /root/easy_train.sh
+# Copy a usable run_easy_train.sh script in at runtime
+docker cp run_easy_train.sh $docker_container_id:/root/
+docker exec -it $docker_container_id chmod +x /root/run_easy_train.sh
 
 # Symlink the data directory to the bind mounted easy_train_data
 docker exec -it $docker_container_id \
