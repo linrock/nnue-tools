@@ -11,9 +11,5 @@ docker_container_id=$(docker run -d \
 docker cp run_easy_train.sh $docker_container_id:/root/
 docker exec -it $docker_container_id chmod +x /root/run_easy_train.sh
 
-# Symlink the data directory to the bind mounted easy_train_data
-docker exec -it $docker_container_id \
-  ln -s /root/easy-train-data /root/nnue-pytorch/scripts/easy_train_data
-
 # Attach a bash shell to the running container
 docker exec -it $docker_container_id bash

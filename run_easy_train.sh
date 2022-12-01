@@ -15,5 +15,6 @@ python3 easy_train.py \
   --max_epoch=800 \
   --auto-exit-timeout-on-training-finished=900 \
   --nnue-pytorch-branch=linrock/nnue-pytorch/misc-fixes \
+  --workspace-path=/root/easy-train-data \
   --network-testing-threads 8 \
   --num-workers 12
