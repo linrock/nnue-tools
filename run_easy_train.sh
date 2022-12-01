@@ -2,7 +2,7 @@
 
 cd nnue-pytorch/scripts
 python3 easy_train.py \
-  --training-dataset=/root/data/Leela-dfrc_n5000.binpack \
+  --training-dataset=/root/training-data/Leela-dfrc_n5000.binpack \
   --experiment-name=1 \
   --gpus="0," \
   --start-lambda=1.0 \
