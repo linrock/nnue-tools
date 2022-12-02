@@ -9,7 +9,8 @@ docker_container_id=$(docker run -d \
 
 # Copy a usable run_easy_train.sh script in at runtime
 docker cp run_easy_train.sh $docker_container_id:/root/
-docker exec -it $docker_container_id chmod +x /root/run_easy_train.sh
+docker cp print_rankings.sh $docker_container_id:/root/
+docker exec -it $docker_container_id chmod +x /root/*.sh
 
 # Attach a bash shell to the running container
 docker exec -it $docker_container_id bash
