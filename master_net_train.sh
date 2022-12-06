@@ -1,9 +1,10 @@
 #!/bin/bash
+# Train the current master .nnue
 
 cd nnue-pytorch/scripts
 python3 easy_train.py \
   --training-dataset=/root/training-data/Leela-dfrc_n5000.binpack \
-  --experiment-name=1 \
+  --experiment-name=Leela-dfrc_n5000 \
   --gpus="0," \
   --start-lambda=1.0 \
   --end-lambda=0.75 \
