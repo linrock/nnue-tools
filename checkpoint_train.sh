@@ -1,14 +1,16 @@
 #!/bin/bash
-# Retrain the current master .nnue on the given training dataset
+# Train the given model (.pt or .nnue) on the given training dataset
 
-experiment_name=Leela-dfrc_n5000
+experiment_name=Leela-dfrc_n5000-from-epoch379
+start_from_model=/root/easy-train-data/experiments/experiment_new-net-UHO-uho4060-7.6GB/epoch379.pt
 training_dataset=/root/training-data/Leela-dfrc_n5000.binpack
 
 cd nnue-pytorch/scripts
 python3 easy_train.py \
   --experiment-name=$experiment_name \
   --training-dataset=$training_dataset \
-  --start-from-engine-test-net True \
+  --start-from-engine-test-net False \
+  --start-from-model=$start_from_model \
   --gpus="0," \
   --start-lambda=1.0 \
   --end-lambda=0.75 \
