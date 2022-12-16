@@ -8,7 +8,7 @@ for ordo_file in $(ls -1 easy-train-data/experiments/*/training/ordo.out); do
   else
     if ls $ordo_file | grep ${search_filter}; then
       cat $ordo_file
-      tail -1 $(dirname $ordo_file)/../logging/easy_train.log
+      tail -20 $(dirname $ordo)/../logging/easy_train.log | grep Epoch | tail -1
     fi
   fi
 done
