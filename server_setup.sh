@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Install nvidia drivers
-sudo apt install nvidia-headless-520 nvidia-utils-520
+sudo apt install nvidia-headless-525 nvidia-utils-525
 # sudo apt install nvidia-driver-510-server
 
 # Unload open-source drivers and load the official nvidia drivers
