@@ -18,6 +18,7 @@ python3 easy_train.py \
   --seed=$RANDOM \
   --max_epoch=800 \
   --auto-exit-timeout-on-training-finished=900 \
+  --build-engine-arch=x86-64-bmi2 \
   --nnue-pytorch-branch=linrock/nnue-pytorch/misc-fixes \
   --workspace-path=/root/easy-train-data \
   --network-testing-threads 8 \
