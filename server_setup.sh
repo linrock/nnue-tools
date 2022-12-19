@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Install nvidia drivers
-sudo apt install nvidia-headless-525 nvidia-utils-525
+sudo apt install -y nvidia-headless-525 nvidia-utils-525
 # sudo apt install nvidia-driver-510-server
 
 # Unload open-source drivers and load the official nvidia drivers
@@ -28,8 +28,8 @@ distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \
 
 # Install docker and nvidia container toolkit
 sudo apt update
-sudo apt install docker-ce docker-ce-cli
-sudo apt install nvidia-docker2
+sudo apt install -y docker-ce docker-ce-cli
+sudo apt install -y nvidia-docker2
 
 # Enable running docker commands without sudo
 sudo usermod -aG docker $(whoami)
