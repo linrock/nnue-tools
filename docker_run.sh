@@ -13,6 +13,7 @@ docker cp checkpoint_train.sh $docker_container_id:/root/
 docker cp master_net_train.sh $docker_container_id:/root/
 docker cp new_net_train.sh $docker_container_id:/root/
 docker cp print_rankings.sh $docker_container_id:/root/
+docker cp run_gauntlet.sh $docker_container_id:/root/
 docker exec -it $docker_container_id chmod +x /root/checkpoint_train.sh
 docker exec -it $docker_container_id chmod +x /root/master_net_train.sh
 docker exec -it $docker_container_id chmod +x /root/new_net_train.sh
