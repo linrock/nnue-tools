@@ -10,9 +10,8 @@ experiment=experiment_leela-dfrc-filtered-T80-sep-oct-nov
 nn_to_test=run_0/nn-epoch779.nnue
 pgn_out=/root/test_gauntlet_sepoctnov_779_stc.pgn
 
-/root/easy-train-data/c-chess-cli/c-chess-cli -gauntlet \
-  -games $num_games \
-  -rounds 1 -concurrency $concurrency \
+/root/easy-train-data/c-chess-cli/c-chess-cli \
+  -gauntlet -rounds 1 -games $num_games -concurrency $concurrency \
   -each option.Threads=1 timeout=20 $tc_options \
   -openings \
     file=/root/easy-train-data/books/UHO_XXL_+0.90_+1.19.epd \

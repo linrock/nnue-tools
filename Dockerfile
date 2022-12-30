@@ -13,12 +13,12 @@ RUN pip3 install --no-cache --upgrade pip setuptools
 RUN --mount=type=cache,target=/root/.cache/pip pip3 install \
   torch --extra-index-url https://download.pytorch.org/whl/cu117
 RUN --mount=type=cache,target=/root/.cache/pip pip3 install \
-  python-chess==0.31.4 psutil asciimatics pytorch-lightning==1.7.7 GPUtil cupy-cuda117
-
+  python-chess==0.31.4 psutil asciimatics pytorch-lightning GPUtil cupy-cuda117
 RUN ln -sf python3 /usr/bin/python
-RUN git clone https://github.com/glinscott/nnue-pytorch /root/nnue-pytorch
 
+RUN git clone https://github.com/linrock/nnue-pytorch /root/nnue-pytorch
 WORKDIR /root/nnue-pytorch
+RUN git checkout misc-fixes
 RUN sh compile_data_loader.bat
 
 WORKDIR /root
