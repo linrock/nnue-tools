@@ -1,9 +1,9 @@
 #!/bin/bash
 # Retrain the current master .nnue on the given training dataset
 
-experiment_name=Leela-dfrc_n5000
-training_dataset=/root/training-data/Leela-dfrc_n5000.binpack
-nnue_pytorch_branch=linrock/nnue-pytorch/misc-fixes
+experiment_name=leela93-dfrc99-filt-only-T80octnov
+training_dataset=/root/training-data/leela93-dfrc99-filt-only-T80octnov.binpack
+nnue_pytorch_branch=linrock/nnue-pytorch/skip28
 gpus="0,"
 
 cd nnue-pytorch/scripts
