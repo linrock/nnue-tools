@@ -8,11 +8,10 @@ def get_sha256_hash(nnue_filename):
 
 def random_non_functional_edit(nnue_filename):
     with open(nnue_filename, "r+b") as f:
-        for offset in range(16, 24):
-            f.seek(offset)
-            b = secrets.token_bytes(1)
-            # print(b)
-            f.write(b)
+        f.seek(33) # the
+        f.write(secrets.token_bytes(3))
+        f.seek(79) # trainer
+        f.write(secrets.token_bytes(7))
 
 if len(sys.argv) != 2:
     print('Usage: ./test.py <nnue_filename>')
