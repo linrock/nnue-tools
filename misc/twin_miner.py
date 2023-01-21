@@ -1,5 +1,5 @@
 import hashlib
-from multiprocessing import Process
+from multiprocessing import Process, Value
 import secrets
 import sys
 
@@ -22,30 +22,30 @@ def get_sha256_hash(nnue_data):
     h.update(nnue_data)
     return h.hexdigest()
 
-def find_variants(nnue_filename, hex_word_list):
+def find_variants(nnue_filename, hex_word_list, counter):
     print(f'Searching for {nnue_filename} variants with sha256 matching {len(hex_word_list)} words')
     nnue_data = get_nnue_data(nnue_filename)
-    num_tries = 0
     while True:
         random_non_functional_edit(nnue_data)
         sha256 = get_sha256_hash(nnue_data)
         sha256_prefix = sha256[:12]
-        num_tries += 1
+        with counter.get_lock():
+            counter.value += 1
         if any(word in sha256_prefix for word in hex_word_list):
-            print(f'Found {sha256_prefix} after {num_tries} tries')
+            print(f'Found {sha256_prefix} after {counter.value} tries')
             new_nnue_filename = f'nn-{sha256_prefix}.nnue'
             print(f'Writing nnue data to {new_nnue_filename}')
             with open(new_nnue_filename, 'wb') as f:
                 f.write(nnue_data)
-        elif num_tries % 100 == 0:
-            print(f'Tried {num_tries} times')
+        elif counter.value % 100 == 0:
+            print(f'Tried {counter.value} times')
 
 nnue_filename = sys.argv[1]
 hex_word_list = open(sys.argv[2], 'r').read().strip().split('\n')
+counter = Value('i', 0)
 processes = [
-    Process(target=find_variants, args=(nnue_filename, hex_word_list)) for i in range(4)
+    Process(target=find_variants, args=(nnue_filename, hex_word_list, counter))
+    for i in range(4)
 ]
-for p in processes:
-    p.start()
-for p in processes:
-    p.join()
+for p in processes: p.start()
+for p in processes: p.join()
