@@ -7,36 +7,33 @@ if len(sys.argv) != 3:
     print('Usage: ./edit_random_bytes.py <nnue_filename> <sha256_prefix>')
     sys.exit(0)
 
+def get_nnue_data(nnue_filename):
+    with open(nnue_filename, 'rb') as f:
+        return bytearray(f.read())
+
+def random_non_functional_edit(nnue_data):
+    for i in range(33, 36):  # the
+        nnue_data[i] = list(secrets.token_bytes(1))[0]
+    for i in range(79, 85):  # traine
+        nnue_data[i] = list(secrets.token_bytes(1))[0]
+
+def get_sha256_hash(nnue_data):
+    h = hashlib.sha256()
+    h.update(nnue_data)
+    return h.hexdigest()
+
 nnue_filename = sys.argv[1]
 sha256_prefix = sys.argv[2]
-
-def read_chunks(f, chunk_size=16384):
-    while True:
-        data = f.read(chunk_size)
-        if not data:
-            break
-        yield data
-
-def get_sha256_hash(nnue_filename):
-    hasher = hashlib.sha256()
-    for chunk in read_chunks(open(nnue_filename, "rb")):
-        hasher.update(chunk)
-    return hasher.hexdigest()
-
-def random_non_functional_edit(nnue_filename):
-    with open(nnue_filename, "r+b") as f:
-        f.seek(33) # the
-        f.write(secrets.token_bytes(3))
-        f.seek(79) # trainer
-        f.write(secrets.token_bytes(7))
-
+num_tries = 0
 
 print(f'Modifying {nnue_filename} to have sha256 prefix: {sha256_prefix}')
-num_tries = 0
-sha256 = get_sha256_hash(nnue_filename)
+nnue_data = get_nnue_data(nnue_filename)
+sha256 = get_sha256_hash(nnue_data)
 while not sha256.startswith(sha256_prefix):
-    random_non_functional_edit(nnue_filename)
-    sha256 = get_sha256_hash(nnue_filename)
+    random_non_functional_edit(nnue_data)
+    with open("test2.nnue", "wb") as f:
+        f.write(nnue_data)
+    sha256 = get_sha256_hash(nnue_data)
     num_tries += 1
     if num_tries % 100 == 0:
         print(f'Tried {num_tries} times')
