@@ -10,10 +10,18 @@ if len(sys.argv) != 3:
 nnue_filename = sys.argv[1]
 sha256_prefix = sys.argv[2]
 
+def read_chunks(f, chunk_size=16384):
+    while True:
+        data = f.read(chunk_size)
+        if not data:
+            break
+        yield data
 
 def get_sha256_hash(nnue_filename):
-    with open(nnue_filename, "rb") as f:
-        return hashlib.sha256(f.read()).hexdigest()
+    hasher = hashlib.sha256()
+    for chunk in read_chunks(open(nnue_filename, "rb")):
+        hasher.update(chunk)
+    return hasher.hexdigest()
 
 def random_non_functional_edit(nnue_filename):
     with open(nnue_filename, "r+b") as f:
