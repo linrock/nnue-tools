@@ -26,13 +26,11 @@ nnue_filename = sys.argv[1]
 sha256_prefix = sys.argv[2]
 num_tries = 0
 
-print(f'Modifying {nnue_filename} to have sha256 prefix: {sha256_prefix}')
+print(f'Finding {nnue_filename} clone with sha256 prefix: {sha256_prefix}')
 nnue_data = get_nnue_data(nnue_filename)
 sha256 = get_sha256_hash(nnue_data)
 while not sha256.startswith(sha256_prefix):
     random_non_functional_edit(nnue_data)
-    with open("test2.nnue", "wb") as f:
-        f.write(nnue_data)
     sha256 = get_sha256_hash(nnue_data)
     num_tries += 1
     if num_tries % 100 == 0:
@@ -40,5 +38,6 @@ while not sha256.startswith(sha256_prefix):
 
 print(f'Found {sha256} after {num_tries} tries')
 new_nnue_filename = f'nn-{sha256[:12]}.nnue'
-print(f'Renaming from {nnue_filename} to {new_nnue_filename}')
-os.rename(nnue_filename, new_nnue_filename)
+print(f'Writing to {new_nnue_filename}')
+with open(new_nnue_filename, 'wb') as f:
+    f.write(nnue_data)
