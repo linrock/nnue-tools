@@ -4,7 +4,7 @@ import secrets
 import sys
 
 if len(sys.argv) != 3:
-    print('Usage: ./edit_random_bytes.py <nnue_filename> <sha256_prefix>')
+    print('Usage: ./clone_rename.py <nnue_filename> <sha256_prefix>')
     sys.exit(0)
 
 def get_nnue_data(nnue_filename):
