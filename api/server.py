@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from glob import glob
 import os
 
@@ -26,7 +26,7 @@ def list_experiments():
     for exp in experiments:
         exp_name = exp['name']
         experiment_rows_html.append(f'''
-            <li><a href="{exp_name}">{exp_name}</a> {exp['last_updated_str']}</li>
+            <li class="exp-link"><a href="{exp_name}">{exp_name}</a> {exp['last_updated_str']}</li>
         ''')
         print(datetime.now() - timedelta(days = 3))
         print(datetime.fromtimestamp(exp['last_updated']))
@@ -41,6 +41,7 @@ def list_experiments():
             ''')
     return f'''
     <html>
+        <head><style>body {{ font-family: Helvetica; }} .exp-link {{ line-height: 1.2rem; }}</style></head>
         <body>
             <h3>Experiments</h3>
             <ul>
@@ -68,6 +69,5 @@ def view_experiment(exp_name: str):
     </html>
     '''
 
-
 if __name__ == "__main__":
-    uvicorn.run('api:app', host="127.0.0.1", port=58000, reload=True)
+    uvicorn.run('server:app', host="127.0.0.1", port=58000, reload=True)
