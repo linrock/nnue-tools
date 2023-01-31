@@ -26,11 +26,14 @@ def list_experiments():
 
 @app.get('/{exp_name}', response_class=HTMLResponse)
 def view_experiment(exp_name: str):
+    with open(f'easy-train-data/experiments/{exp_name}/training/ordo.out', 'r') as f:
+        ordo_out = f.read()
     return f'''
     <html>
         <body>
             <h3>Experiment</h3>
             <h4>{exp_name}</h4>
+            <pre>{ordo_out}</pre>
         </body>
     </html>
     '''
