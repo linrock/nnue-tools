@@ -7,14 +7,18 @@ from fastapi.responses import HTMLResponse
 import uvicorn
 
 
+API_KEY = '4d60dd83233bfade6fa30c4ec16aa033'  # import secrets; secrets.token_hex(16)
+app = FastAPI()
+
+
 def experiment_path(exp_name: str):
     return f'../easy-train-data/experiments/{exp_name}'
 
 
-app = FastAPI()
-
-@app.get('/', response_class=HTMLResponse)
-def list_experiments():
+@app.get('/experiments', response_class=HTMLResponse)
+def list_experiments(api_key: str = ''):
+    if api_key != API_KEY:
+        return "Unauthorized"
     experiments = []
     for exp in glob('../easy-train-data/experiments/*'):
         exp_name = exp.split('/')[-1]
@@ -60,7 +64,9 @@ def list_experiments():
     '''
 
 @app.get('/{exp_name}', response_class=HTMLResponse)
-def view_experiment(exp_name: str):
+def view_experiment(exp_name: str, api_key: str = ''):
+    if api_key != API_KEY:
+        return "Unauthorized"
     with open(f'{experiment_path(exp_name)}/training/ordo.out', 'r') as f:
         ordo_out = f.read()
     return f'''
