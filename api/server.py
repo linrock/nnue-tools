@@ -32,7 +32,7 @@ def list_experiments():
         print(datetime.fromtimestamp(exp['last_updated']))
         if datetime.now() - timedelta(days = 3) < datetime.fromtimestamp(exp['last_updated']):
             with open(f'easy-train-data/experiments/{exp_name}/training/ordo.out', 'r') as f:
-                ordo_out = f.read()
+                ordo_out = '\n'.join(f.read().split("\n")[:20])
             recent_experiments_html.append(f'''
                 <li>
                     <h4>{exp_name}</h4>
