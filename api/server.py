@@ -7,14 +7,18 @@ from fastapi.responses import HTMLResponse
 import uvicorn
 
 
+def experiment_path(exp_name: str):
+    return f'../easy-train-data/experiments/{exp_name}'
+
+
 app = FastAPI()
 
 @app.get('/', response_class=HTMLResponse)
 def list_experiments():
     experiments = []
-    for exp in glob('easy-train-data/experiments/*'):
+    for exp in glob('../easy-train-data/experiments/*'):
         exp_name = exp.split('/')[-1]
-        exp_last_modified = os.path.getmtime(f'easy-train-data/experiments/{exp_name}/training/out.pgn')
+        exp_last_modified = os.path.getmtime(f'{experiment_path(exp_name)}/training/out.pgn')
         experiments.append({
             'name': exp_name,
             'last_updated': exp_last_modified,
@@ -31,7 +35,7 @@ def list_experiments():
         print(datetime.now() - timedelta(days = 3))
         print(datetime.fromtimestamp(exp['last_updated']))
         if datetime.now() - timedelta(days = 3) < datetime.fromtimestamp(exp['last_updated']):
-            with open(f'easy-train-data/experiments/{exp_name}/training/ordo.out', 'r') as f:
+            with open(f'{experiment_path(exp_name)}/training/ordo.out', 'r') as f:
                 ordo_out = '\n'.join(f.read().split("\n")[:20])
             recent_experiments_html.append(f'''
                 <li>
@@ -57,7 +61,7 @@ def list_experiments():
 
 @app.get('/{exp_name}', response_class=HTMLResponse)
 def view_experiment(exp_name: str):
-    with open(f'easy-train-data/experiments/{exp_name}/training/ordo.out', 'r') as f:
+    with open(f'{experiment_path(exp_name)}/training/ordo.out', 'r') as f:
         ordo_out = f.read()
     return f'''
     <html>
