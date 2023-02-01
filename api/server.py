@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from glob import glob
 import os
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse
 import uvicorn
 
@@ -63,6 +63,12 @@ def list_experiments(api_key: str = ''):
     </html>
     '''
 
+
+@app.get('/favicon.ico')
+def return_404():
+    raise HTTPException(status_code=404)
+
+
 @app.get('/{exp_name}', response_class=HTMLResponse)
 def view_experiment(exp_name: str, api_key: str = ''):
     if api_key != API_KEY:
@@ -78,6 +84,7 @@ def view_experiment(exp_name: str, api_key: str = ''):
         </body>
     </html>
     '''
+
 
 if __name__ == "__main__":
     uvicorn.run('server:app', host="127.0.0.1", port=58000, reload=True)
