@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 from glob import glob
 import os
+import sys
 
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse, Response
@@ -114,6 +115,8 @@ def view_experiment(exp_name: str, api_key: str = ''):
 
 
 if __name__ == "__main__":
-    uvicorn.run('server:app', host="127.0.0.1", port=58000, reload=True,
-                ssl_keyfile='./key.pem',
-                ssl_certfile='./cert.pem')
+    host = '127.0.0.1'
+    if len(sys.argv) == 2:
+        host = sys.argv[1]
+    uvicorn.run('server:app', host=host, port=58000, reload=True,
+                ssl_keyfile='./key.pem', ssl_certfile='./cert.pem')
