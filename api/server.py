@@ -56,6 +56,7 @@ def list_experiments(api_key: str = ''):
                 {''.join(experiment_rows_html)}
             </ul>
             <h3>Recent experiments</h3>
+            <img src="/graphs?api_key={api_key}" />
             <ul>
                 {''.join(recent_experiments_html)}
             </ul>
