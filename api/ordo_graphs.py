@@ -62,7 +62,7 @@ def ordo_plot_png_image(root_dirs):
                     elos.append(elo)
                     errors.append(error)
             print(f'Found ordo data for {len(epochs)} epochs')
-            plot_kwargs = { 'label': f'{root_dir} {run_to_plot}' }
+            plot_kwargs = { 'label': f"{root_dir.split('/')[-1]} {run_to_plot}" }
             if 'master-net' in root_dir:
                 plot_kwargs['linewidth'] = 3
             elif 'experiment_control' in root_dir:
@@ -79,6 +79,6 @@ def ordo_plot_png_image(root_dirs):
                                  color=color, alpha=0.2)
     ax_elo.axhline(y = 0, color = 'g', linestyle = '--')
     ax_elo.legend()
-    plt.savefig('/tmp/plot.png', dpi=300)
+    plt.savefig('/tmp/plot.png', dpi=100)
     with open('/tmp/plot.png', 'rb') as f:
         return f.read()
