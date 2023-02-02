@@ -27,12 +27,14 @@ def list_experiments(api_key: str = ''):
     experiments = []
     for exp in glob('../easy-train-data/experiments/*'):
         exp_name = exp.split('/')[-1]
-        exp_last_modified = os.path.getmtime(f'{experiment_path(exp_name)}/training/out.pgn')
-        experiments.append({
-            'name': exp_name,
-            'last_updated': exp_last_modified,
-            'last_updated_str': datetime.fromtimestamp(exp_last_modified).strftime("%b %-d")
-        })
+        pgn_file = f'{experiment_path(exp_name)}/training/out.pgn'
+        if os.path.isfile(pgn_file):
+            exp_last_modified = os.path.getmtime(pgn_file)
+            experiments.append({
+                'name': exp_name,
+                'last_updated': exp_last_modified,
+                'last_updated_str': datetime.fromtimestamp(exp_last_modified).strftime("%b %-d")
+            })
     experiments = sorted(experiments, key=lambda exp: -exp['last_updated'])
     experiment_rows_html = []
     recent_experiments_html = []
@@ -90,12 +92,14 @@ def recent_experiment_graphs(api_key: str = ''):
     experiments = []
     for exp in glob('../easy-train-data/experiments/*'):
         exp_name = exp.split('/')[-1]
-        exp_last_modified = os.path.getmtime(f'{experiment_path(exp_name)}/training/out.pgn')
-        experiments.append({
-            'name': exp_name,
-            'last_updated': exp_last_modified,
-            'last_updated_str': datetime.fromtimestamp(exp_last_modified).strftime("%b %-d")
-        })
+        pgn_file = f'{experiment_path(exp_name)}/training/out.pgn'
+        if os.path.isfile(pgn_file):
+            exp_last_modified = os.path.getmtime(pgn_file)
+            experiments.append({
+                'name': exp_name,
+                'last_updated': exp_last_modified,
+                'last_updated_str': datetime.fromtimestamp(exp_last_modified).strftime("%b %-d")
+            })
     experiments = sorted(experiments, key=lambda exp: -exp['last_updated'])
     experiment_rows_html = []
     recent_experiments = []
