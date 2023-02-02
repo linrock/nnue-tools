@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 from glob import glob
 import os
+import re
 import socket
 import sys
 
@@ -38,15 +39,30 @@ def list_experiments(api_key: str = ''):
     for exp in experiments:
         exp_name = exp['name']
         experiment_rows_html.append(f'''
-            <li class="exp-link"><a href="{exp_name}">{exp_name}</a> {exp['last_updated_str']}</li>
+            <li class="exp-link">
+              <a href="{exp_name}?api_key={api_key}">{exp_name}</a>
+              {exp['last_updated_str']}
+            </li>
         ''')
         if datetime.now() - timedelta(days = 3) < datetime.fromtimestamp(exp['last_updated']):
             with open(f'{experiment_path(exp_name)}/training/ordo.out', 'r') as f:
                 ordo_out = '\n'.join(f.read().split("\n")[:20])
+            ordo_rows_html = []
+            for ordo_row in ordo_out.split('\n'):
+                epoch_match = re.search(r'(run_\d/nn-epoch[\d]+\.nnue)', ordo_row)
+                if epoch_match:
+                    nn_name = epoch_match[0]
+                    ordo_rows_html.append(ordo_row.replace(
+                        nn_name,
+                        f'<a href="/nn?path={exp_name}/training/{nn_name}&api_key={api_key}">{nn_name}</a>'
+                    ))
+                else:
+                    ordo_rows_html.append(ordo_row)
+            ordo_rows_html = '\n'.join(ordo_rows_html)
             recent_experiments_html.append(f'''
                 <li>
                     <h4>{exp_name}</h4>
-                    <pre>{ordo_out}</pre>
+                    <pre>{ordo_rows_html}</pre>
                 </li>
             ''')
     return f'''
@@ -93,6 +109,13 @@ def recent_experiment_graphs(api_key: str = ''):
     return Response(content=ordo_plot_png_image(recent_experiments), media_type="image/png")
 
 
+@app.get('/nn', response_class=HTMLResponse)
+def view_experiment(path: str, api_key: str = ''):
+    if api_key != API_KEY:
+        return "Unauthorized"
+    return path
+
+
 @app.get('/favicon.ico')
 def return_404():
     raise HTTPException(status_code=404)
@@ -113,7 +136,6 @@ def view_experiment(exp_name: str, api_key: str = ''):
         </body>
     </html>
     '''
-
 
 if __name__ == "__main__":
     host = '127.0.0.1'
