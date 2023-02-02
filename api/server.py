@@ -6,7 +6,7 @@ import socket
 import sys
 
 from fastapi import FastAPI, HTTPException
-from fastapi.responses import HTMLResponse, Response
+from fastapi.responses import FileResponse, HTMLResponse, Response
 import uvicorn
 
 from ordo_graphs import ordo_plot_png_image
@@ -113,7 +113,13 @@ def recent_experiment_graphs(api_key: str = ''):
 def view_experiment(path: str, api_key: str = ''):
     if api_key != API_KEY:
         return "Unauthorized"
-    return path
+    path_to_nnue = f'../easy-train-data/experiments/{path}'
+    if os.path.isfile(path_to_nnue):
+        return FileResponse(path_to_nnue,
+            media_type='application/octet-stream',
+            filename=path.split('/')[-1])
+    else:
+        raise HTTPException(status_code=404, detail="File not found")
 
 
 @app.get('/favicon.ico')
