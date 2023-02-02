@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 from glob import glob
 import os
+import socket
 import sys
 
 from fastapi import FastAPI, HTTPException
@@ -52,7 +53,7 @@ def list_experiments(api_key: str = ''):
     <html lang="en">
         <head><style>body {{ font-family: Helvetica; }} .exp-link {{ line-height: 1.2rem; }}</style></head>
         <body>
-            <h3>Experiments</h3>
+            <h3>Experiments - {socket.gethostname()}</h3>
             <ul>
                 {''.join(experiment_rows_html)}
             </ul>
