@@ -4,7 +4,7 @@ import secrets
 import sys
 
 if len(sys.argv) != 3:
-    print('Usage: ./twin_miner.py <nnue_filename> <hex_word_list>')
+    print('Usage: ./cpu_nnue_namer.py <nnue_filename> <hex_word_list>')
     sys.exit(0)
 
 def get_nnue_data(nnue_filename):
