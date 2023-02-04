@@ -31,13 +31,13 @@ def find_variants(nnue_filename, hex_word_list, counter):
         sha256_prefix = sha256[:12]
         with counter.get_lock():
             counter.value += 1
-        if any(word in sha256_prefix for word in hex_word_list):
+        if any(sha256_prefix.startswith(word) for word in hex_word_list):
             print(f'Found {sha256_prefix} after {counter.value} tries')
             new_nnue_filename = f'nn-{sha256_prefix}.nnue'
             print(f'Writing nnue data to {new_nnue_filename}')
             with open(new_nnue_filename, 'wb') as f:
                 f.write(nnue_data)
-        elif counter.value % 100 == 0:
+        elif counter.value % 10000 == 0:
             print(f'Tried {counter.value} times')
 
 nnue_filename = sys.argv[1]
