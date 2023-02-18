@@ -69,9 +69,19 @@ def list_experiments(api_key: str = ''):
             ''')
     return f'''
     <html lang="en">
-        <head><style>body {{ font-family: Helvetica; }} .exp-link {{ line-height: 1.2rem; }}</style></head>
+        <head><style>
+          body {{ font-family: Helvetica; }}
+          .exp-link {{ line-height: 1.2rem; }}
+           h2 {{ position: fixed;
+                 top: 0;
+                 background: white;
+                 display: block;
+                 margin: 0;
+                 padding: 1rem; }}
+        </style></head>
         <body>
-            <h3>Experiments - {socket.gethostname()}</h3>
+            <h2>Experiments - {socket.gethostname()}</h2>
+            <div style="height: 3rem"></div>
             <ul>
                 {''.join(experiment_rows_html)}
             </ul>
