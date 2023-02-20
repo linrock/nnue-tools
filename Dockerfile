@@ -7,7 +7,7 @@ ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64:${LD_LIBRARY_PATH}
 
 RUN apt update
 RUN DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt install -y \
-  vim git cmake tmux wget curl python3 python3-pip
+  vim git tig tree cmake tmux wget curl python3 python3-pip
 
 RUN pip3 install --no-cache --upgrade pip setuptools
 RUN --mount=type=cache,target=/root/.cache/pip pip3 install \
