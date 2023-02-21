@@ -124,7 +124,7 @@ def recent_experiment_graphs(api_key: str = ''):
 
 
 @app.get('/nn', response_class=HTMLResponse)
-def view_experiment(path: str, api_key: str = ''):
+def download_nnue_datafile(path: str, api_key: str = ''):
     if api_key != API_KEY:
         return "Unauthorized"
     path_to_nnue = f'../easy-train-data/experiments/{path}'
