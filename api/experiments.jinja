@@ -27,7 +27,7 @@
     </style>
   </head>
   <body>
-    <h2>Experiments - {socket.gethostname()}</h2>
+    <h2>Experiments - {{ server_name }}</h2>
     <div style="height: 3rem"></div>
     <ul>
       {% for experiment in experiments %}

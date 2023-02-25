@@ -65,6 +65,7 @@ def list_experiments(request: Request, api_key: str = ''):
             })
     return templates.TemplateResponse('experiments.jinja', {
         'request': request,
+        'server_name': socket.gethostname(),
         'experiments': experiments,
         'recent_experiments': recent_experiments,
         'api_key': api_key,
