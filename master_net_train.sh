@@ -10,7 +10,7 @@ python3 easy_train.py \
   --early-fen-skipping 28 \
   --max_epoch 800 \
   --start-lambda 1.0 \
-  --end-lambda 0.75 \
+  --end-lambda 0.7 \
   --network-testing-games-per-round 1000 \
   --network-testing-threads 24 \
   --num-workers 6 \
