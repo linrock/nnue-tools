@@ -47,16 +47,26 @@
               <div class="ordo-results">
                 <span><pre style="display: inline">{{ ordo_row['text'] }}</pre></span>
                 {% if ordo_row.get('nn_name') %}
-<span>
                   <a href="/nn?path={{ experiment['name'] }}/training/{{ ordo_row['nn_name'] }}&api_key={{ api_key }}">
-                    {{ ordo_row['nn_name'] }}
+                    download
                   </a>
-</span>
+                  <a href="/nn-sha256?path={{ experiment['name'] }}/training/{{ ordo_row['nn_name'] }}&api_key={{ api_key }}"
+                     class="sha256-link">
+                    sha256
+                  </a>
                 {% endif %}
               </div>
             {% endfor %}
         </li>
       {% endfor %}
     </ul>
+    <script>
+      [...document.querySelectorAll(".sha256-link")].forEach((linkEl) => {
+        linkEl.addEventListener("click", (evt) => {
+          evt.preventDefault();
+          fetch(linkEl.href).then((resp) => resp.text()).then((text) => linkEl.textContent = text);
+        });
+      });
+    </script>
   </body>
 </html>

@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 from glob import glob
+import hashlib
 import os
 import re
 import socket
@@ -107,6 +108,21 @@ def download_nnue_datafile(path: str, api_key: str = ''):
         return FileResponse(path_to_nnue,
             media_type='application/octet-stream',
             filename=path.split('/')[-1])
+    else:
+        raise HTTPException(status_code=404, detail="File not found")
+
+
+@app.get('/nn-sha256', response_class=HTMLResponse)
+def download_nnue_datafile(path: str, api_key: str = ''):
+    if api_key != API_KEY:
+        return "Unauthorized"
+    path_to_nnue = f'../easy-train-data/experiments/{path}'
+    if os.path.isfile(path_to_nnue):
+        with open(path_to_nnue, 'rb') as f:
+            h = hashlib.sha256()
+            h.update(bytearray(f.read()))
+            sha256 = h.hexdigest()
+        return f"nn-{sha256[:12]}.nnue"
     else:
         raise HTTPException(status_code=404, detail="File not found")
 
