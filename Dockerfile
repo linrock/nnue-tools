@@ -24,5 +24,6 @@ RUN sh compile_data_loader.bat
 WORKDIR /root
 COPY .bash_profile .
 RUN echo 'source .bash_profile' >> .bashrc
+COPY misc .
 
 CMD sleep infinity

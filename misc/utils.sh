@@ -1,7 +1,6 @@
 function filename_to_gpu_str() {
   script_filename=`basename "$0"`
   gpu_str=""
-  echo $script_filename
   if [[ $script_filename == *"0"* ]]; then gpu_str="${gpu_str}0,"; fi
   if [[ $script_filename == *"1"* ]]; then gpu_str="${gpu_str}1,"; fi
   if [[ $script_filename == *"2"* ]]; then gpu_str="${gpu_str}2,"; fi
