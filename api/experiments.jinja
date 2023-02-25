@@ -1,0 +1,62 @@
+<html lang="en">
+  <head>
+    <style>
+      body {
+        font-family: Helvetica;
+      }
+     .exp-link {
+        line-height: 1.2rem;
+      }
+      h2 {
+        position: fixed;
+        top: 0;
+        background: white;
+        display: block;
+        margin: 0;
+        padding: 1rem;
+      }
+      .ordo-results {
+        font-family: monospace;
+      }
+      .ordo-results span {
+        line-height: 1rem;
+      }
+      pre a {
+        display: inline;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Experiments - {socket.gethostname()}</h2>
+    <div style="height: 3rem"></div>
+    <ul>
+      {% for experiment in experiments %}
+        <li class="exp-link">
+          <a href="{{ experiment['name'] }}?api_key={{ api_key }}">{{ experiment['name'] }}</a>
+          {experiment['last_updated_str']}
+        </li>
+      {% endfor %}
+    </ul>
+    <h3>Recent experiments</h3>
+    <img src="/graphs?api_key={{ api_key }}" style="max-width: 100%" />
+    <ul>
+      {% for experiment in recent_experiments %}
+        <li>
+          <h4>{{ experiment['name'] }}</h4>
+            {% for ordo_row in experiment['ordo_rows'] %}
+              <div class="ordo-results">
+                <span><pre style="display: inline">{{ ordo_row['text'] }}</pre></span>
+                {% if ordo_row.get('nn_name') %}
+<span>
+                  <a href="/nn?path={{ experiment['name'] }}/training/{{ ordo_row['nn_name'] }}&api_key={{ api_key }}">
+                    {{ ordo_row['nn_name'] }}
+                  </a>
+</span>
+                {% endif %}
+              </div>
+            {% endfor %}
+        </li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>

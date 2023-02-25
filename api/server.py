@@ -5,8 +5,9 @@ import re
 import socket
 import sys
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import FileResponse, HTMLResponse, Response
+from fastapi.templating import Jinja2Templates
 import uvicorn
 
 from ordo_graphs import ordo_plot_png_image
@@ -14,6 +15,7 @@ from ordo_graphs import ordo_plot_png_image
 
 API_KEY = '4d60dd83233bfade6fa30c4ec16aa033'  # import secrets; secrets.token_hex(16)
 app = FastAPI()
+templates = Jinja2Templates(directory="./")
 
 
 def experiment_path(exp_name: str):
@@ -21,7 +23,7 @@ def experiment_path(exp_name: str):
 
 
 @app.get('/experiments', response_class=HTMLResponse)
-def list_experiments(api_key: str = ''):
+def list_experiments(request: Request, api_key: str = ''):
     if api_key != API_KEY:
         return "Unauthorized"
     experiments = []
@@ -33,66 +35,39 @@ def list_experiments(api_key: str = ''):
             experiments.append({
                 'name': exp_name,
                 'last_updated': exp_last_modified,
-                'last_updated_str': datetime.fromtimestamp(exp_last_modified).strftime("%b %-d")
+                'last_updated_str': datetime.fromtimestamp(exp_last_modified).strftime("%b %-d"),
+                'ordo_rows': [],
             })
     experiments = sorted(experiments, key=lambda exp: -exp['last_updated'])
-    experiment_rows_html = []
-    recent_experiments_html = []
+    recent_experiments = []
     for exp in experiments:
         exp_name = exp['name']
-        experiment_rows_html.append(f'''
-            <li class="exp-link">
-              <a href="{exp_name}?api_key={api_key}">{exp_name}</a>
-              {exp['last_updated_str']}
-            </li>
-        ''')
         if datetime.now() - timedelta(days = 3) < datetime.fromtimestamp(exp['last_updated']):
             with open(f'{experiment_path(exp_name)}/training/ordo.out', 'r') as f:
                 ordo_out = '\n'.join(f.read().split("\n")[:20])
-            ordo_rows_html = []
+            ordo_rows = []
             for ordo_row in ordo_out.split('\n'):
                 epoch_match = re.search(r'(run_\d/nn-epoch[\d]+\.nnue)', ordo_row)
                 if epoch_match:
                     nn_name = epoch_match[0]
-                    ordo_rows_html.append(ordo_row.replace(
-                        nn_name,
-                        f'<a href="/nn?path={exp_name}/training/{nn_name}&api_key={api_key}">{nn_name}</a>'
-                    ))
+                    ordo_rows.append({
+                        'nn_name': nn_name,
+                        'text': ordo_row
+                    })
                 else:
-                    ordo_rows_html.append(ordo_row)
-            ordo_rows_html = '\n'.join(ordo_rows_html)
-            recent_experiments_html.append(f'''
-                <li>
-                    <h4>{exp_name}</h4>
-                    <pre>{ordo_rows_html}</pre>
-                </li>
-            ''')
-    return f'''
-    <html lang="en">
-        <head><style>
-          body {{ font-family: Helvetica; }}
-          .exp-link {{ line-height: 1.2rem; }}
-           h2 {{ position: fixed;
-                 top: 0;
-                 background: white;
-                 display: block;
-                 margin: 0;
-                 padding: 1rem; }}
-        </style></head>
-        <body>
-            <h2>Experiments - {socket.gethostname()}</h2>
-            <div style="height: 3rem"></div>
-            <ul>
-                {''.join(experiment_rows_html)}
-            </ul>
-            <h3>Recent experiments</h3>
-            <img src="/graphs?api_key={api_key}" style="max-width: 100%" />
-            <ul>
-                {''.join(recent_experiments_html)}
-            </ul>
-        </body>
-    </html>
-    '''
+                    ordo_rows.append({
+                        'text': ordo_row
+                    })
+            recent_experiments.append({
+                'name': exp_name,
+                'ordo_rows': ordo_rows
+            })
+    return templates.TemplateResponse('experiments.jinja', {
+        'request': request,
+        'experiments': experiments,
+        'recent_experiments': recent_experiments,
+        'api_key': api_key,
+    })
 
 
 @app.get('/graphs')
