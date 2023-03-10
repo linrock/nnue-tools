@@ -17,28 +17,31 @@ def random_non_functional_edit(nnue_data):
     for i in range(79, 85):  # traine
         nnue_data[i] = list(secrets.token_bytes(1))[0]
 
-def get_sha256_hash(nnue_data):
-    h = hashlib.sha256()
-    h.update(nnue_data)
-    return h.hexdigest()
-
 def find_variants(nnue_filename, hex_word_list, counter):
     print(f'Searching for {nnue_filename} variants with sha256 matching {len(hex_word_list)} words')
     nnue_data = get_nnue_data(nnue_filename)
     while True:
-        random_non_functional_edit(nnue_data)
-        sha256 = get_sha256_hash(nnue_data)
-        sha256_prefix = sha256[:12]
-        with counter.get_lock():
-            counter.value += 1
-        if any(sha256_prefix.startswith(word) for word in hex_word_list):
-            print(f'Found {sha256_prefix} after {counter.value} tries')
-            new_nnue_filename = f'nn-{sha256_prefix}.nnue'
-            print(f'Writing nnue data to {new_nnue_filename}')
-            with open(new_nnue_filename, 'wb') as f:
-                f.write(nnue_data)
-        elif counter.value % 10000 == 0:
-            print(f'Tried {counter.value} times')
+        nnue_data_copy = nnue_data.copy()
+        random_non_functional_edit(nnue_data_copy)
+        h = hashlib.sha256()
+        h.update(nnue_data_copy[:-1])
+        # minimally functional edits to last byte
+        for i in range(76, 91):
+            nnue_data_copy[-1] = i
+            h2 = h.copy()
+            h2.update(nnue_data_copy[-1:])
+            sha256 = h2.hexdigest()
+            sha256_prefix = sha256[:12]
+            with counter.get_lock():
+                counter.value += 1
+            if any(sha256_prefix.startswith(word) for word in hex_word_list):
+                print(f'Found {sha256_prefix} after {counter.value} tries')
+                new_nnue_filename = f'nn-{sha256_prefix}.nnue'
+                print(f'Writing nnue data to {new_nnue_filename}')
+                with open(new_nnue_filename, 'wb') as f:
+                    f.write(nnue_data)
+            elif counter.value % 10000 == 0:
+                print(f'Tried {counter.value} times')
 
 nnue_filename = sys.argv[1]
 hex_word_list = open(sys.argv[2], 'r').read().strip().split('\n')
