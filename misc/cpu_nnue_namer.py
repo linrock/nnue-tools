@@ -1,5 +1,5 @@
 import hashlib
-from multiprocessing import Process, Value
+from multiprocessing import cpu_count, Process, Value
 import secrets
 import sys
 
@@ -45,7 +45,7 @@ hex_word_list = open(sys.argv[2], 'r').read().strip().split('\n')
 counter = Value('i', 0)
 processes = [
     Process(target=find_variants, args=(nnue_filename, hex_word_list, counter))
-    for i in range(4)
+    for i in range(cpu_count() - 1)
 ]
 for p in processes: p.start()
 for p in processes: p.join()
