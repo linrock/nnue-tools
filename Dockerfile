@@ -33,6 +33,8 @@ RUN sh compile_data_loader.bat
 WORKDIR /root
 COPY .bash_profile .
 RUN echo 'source .bash_profile' >> .bashrc
-COPY misc .
+
+RUN mkdir misc
+COPY misc/utils.sh misc/utils.sh
 
 CMD sleep infinity
