@@ -33,7 +33,7 @@
       {% for experiment in experiments %}
         <li class="exp-link">
           <a href="{{ experiment['name'] }}?api_key={{ api_key }}">{{ experiment['name'] }}</a>
-          {experiment['last_updated_str']}
+          {{ experiment['last_updated_str'] }}
         </li>
       {% endfor %}
     </ul>
