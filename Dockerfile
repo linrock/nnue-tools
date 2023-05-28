@@ -15,9 +15,10 @@ RUN pip3 install --no-cache --upgrade pip setuptools
 # Clone torch repo, then compile and install
 RUN git clone --recursive https://github.com/pytorch/pytorch /root/pytorch
 WORKDIR /root/pytorch
+RUN git checkout v2.0.1
 RUN git submodule sync
 RUN git submodule update --init --recursive
-RUN python3 setup.py develop
+# RUN python3 setup.py develop
 
 # Install rest of pip dependencies
 RUN --mount=type=cache,target=/root/.cache/pip \
