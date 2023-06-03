@@ -21,6 +21,3 @@ build-engine-arch: x86-64-bmi2
 workspace-path: /root/easy-train-data
 gpus: $(filename_to_gpu_str)
 nnue_pytorch_branch: linrock/nnue-pytorch/misc-fixes-L1-1152
-
-tui: False
-seed: $RANDOM
