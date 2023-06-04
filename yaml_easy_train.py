@@ -1,4 +1,5 @@
 import random
+import sys
 import yaml
 
 default_args = {
@@ -6,13 +7,16 @@ default_args = {
     'tui': False,
 }
 
-with open("config.yml", "r") as stream:
+with open(sys.argv[1], "r") as stream:
     try:
         args = yaml.safe_load(stream)
         args = {**default_args, **args}
         command = ["python3 easy_train.py"]
         for key,value in sorted(args.items()):
             command.append(f"  --{key} {value}")
-        print(" \\\n".join(command))
+        if len(sys.argv) > 2 and sys.argv[2] == "print":
+            print(" \\\n".join(command))
+        else:
+            print(" ".join(command))
     except yaml.YAMLError as exc:
         print(exc)
