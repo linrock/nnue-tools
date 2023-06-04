@@ -14,10 +14,13 @@ docker cp master_net_train.sh $docker_container_id:/root/
 docker cp new_net_train.sh $docker_container_id:/root/
 docker cp print_rankings.sh $docker_container_id:/root/
 docker cp run_gauntlet.sh $docker_container_id:/root/
+docker cp yaml_easy_train.py $docker_container_id:/root/
+docker cp train_from_config.sh $docker_container_id:/root/
 docker exec -it $docker_container_id chmod +x /root/checkpoint_train.sh
 docker exec -it $docker_container_id chmod +x /root/master_net_train.sh
 docker exec -it $docker_container_id chmod +x /root/new_net_train.sh
 docker exec -it $docker_container_id chmod +x /root/print_rankings.sh
+docker exec -it $docker_container_id chmod +x /root/train_from_config.sh
 
 # Attach a bash shell to the running container
 docker exec -it $docker_container_id bash
