@@ -5,6 +5,7 @@ docker_container_id=$(docker run -d \
   --gpus all \
   --mount type=bind,source="$(pwd)"/training-data,target=/root/training-data \
   --mount type=bind,source="$(pwd)"/easy-train-data,target=/root/easy-train-data \
+  --mount type=bind,source="$(pwd)"/config,target=/root/config \
   --mount type=bind,source=/dev/shm,target=/dev/shm \
   nnue-pytorch)
 
