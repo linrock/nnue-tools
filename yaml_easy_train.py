@@ -6,6 +6,7 @@ import yaml
 default_args = {
     'seed': random.randint(9999, 9_999_999),
     'tui': False,
+    'workspace-path': '/root/easy-train-data',
 }
 
 yaml_config_file = sys.argv[1]
