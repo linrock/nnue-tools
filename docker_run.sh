@@ -11,7 +11,6 @@ docker_container_id=$(docker run -d \
 
 # Copy a usable run_easy_train.sh script in at runtime
 docker cp print_rankings.sh $docker_container_id:/root/
-docker cp run_gauntlet.sh $docker_container_id:/root/
 docker cp yaml_easy_train.py $docker_container_id:/root/
 docker cp train.sh $docker_container_id:/root/
 
