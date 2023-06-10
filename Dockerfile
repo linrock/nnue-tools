@@ -30,7 +30,7 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 RUN --mount=type=cache,target=/root/.cache/pip \
   pip3 install python-chess==0.31.4 psutil \
   asciimatics pytorch-lightning==1.9.4 \
-  tensorboardx GPUtil cupy-cuda118
+  tensorboardx GPUtil cupy-cuda11x
 
 RUN git clone https://github.com/linrock/nnue-pytorch /root/nnue-pytorch
 WORKDIR /root/nnue-pytorch
