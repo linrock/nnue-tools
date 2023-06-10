@@ -32,10 +32,16 @@ RUN git checkout misc-fixes
 RUN sh compile_data_loader.bat
 
 WORKDIR /root
+COPY yaml_easy_train.py .
 COPY .bash_profile .
 RUN echo 'source .bash_profile' >> .bashrc
 
 RUN mkdir misc
 COPY misc/utils.sh misc/utils.sh
 
+WORKDIR /usr/local/bin
+COPY train.sh .
+RUN chmod +x train.sh
+
+WORKDIR /root
 CMD sleep infinity
