@@ -46,8 +46,8 @@ RUN mkdir misc
 COPY misc/utils.sh misc/utils.sh
 
 WORKDIR /usr/local/bin
-COPY train.sh .
-RUN chmod +x train.sh
+COPY easy-train.sh .
+RUN chmod +x easy-train.sh
 
 WORKDIR /root
 CMD sleep infinity
