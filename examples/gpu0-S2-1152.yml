@@ -1,23 +1,22 @@
 experiment-name: L1-1152-T79T77v6dd-leela96-dfrc99-16t-v2-T60novdecT80juntonovjanfebT79aprmayT78jantosepT77dec-v6dd
 training-dataset: /data/leela96-dfrc99-16t-v2-T60novdecT80juntonovjanfebT79aprmayT78jantosepT77dec-v6dd.binpack
-nnue-pytorch-branch: linrock/nnue-pytorch/misc-fixes
-
 early-fen-skipping: 28
-num-epochs: 800
-start-lambda: 1.0
-end-lambda: 0.7
-network-testing-games-per-round: 1000
-network-testing-threads: 24
-num-workers: 6
 
 start-from-engine-test-net: False
 start-from-model: /data/L1-1152-test79test77-filter-v6-dd-nn-epoch399.nnue
 engine-test-branch: linrock/Stockfish/L1-1152
+nnue-pytorch-branch: linrock/nnue-pytorch/misc-fixes
 
+num-epochs: 800
+start-lambda: 1.0
+end-lambda: 0.7
 lr: 4.375e-4
 gamma: 0.995
 
+network-testing-games-per-round: 1000
+network-testing-threads: 24
+num-workers: 6
+
 build-engine-arch: x86-64-bmi2
 workspace-path: /root/easy-train-data
-gpus: $(filename_to_gpu_str)
-nnue_pytorch_branch: linrock/nnue-pytorch/misc-fixes-L1-1152
+gpus: 0

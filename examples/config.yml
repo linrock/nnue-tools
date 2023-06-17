@@ -16,5 +16,5 @@ gamma: 0.995
 
 build-engine-arch: x86-64-bmi2
 workspace-path: /root/easy-train-data
-gpus: $(filename_to_gpu_str)
+gpus: 0
 nnue-pytorch-branch: $nnue_pytorch_branch
