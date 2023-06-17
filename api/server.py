@@ -7,6 +7,7 @@ import socket
 import sys
 
 from fastapi import FastAPI, HTTPException, Request
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, HTMLResponse, Response
 from fastapi.templating import Jinja2Templates
 import uvicorn
@@ -16,6 +17,13 @@ from ordo_graphs import ordo_plot_png_image
 
 API_KEY = '4d60dd83233bfade6fa30c4ec16aa033'  # import secrets; secrets.token_hex(16)
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_credentials=True,
+    allow_headers=["*"],
+    allow_methods=["get"],
+    allow_origins=["*"],
+)
 templates = Jinja2Templates(directory="./")
 
 
