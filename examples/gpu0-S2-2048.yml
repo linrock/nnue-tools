@@ -1,0 +1,22 @@
+experiment-name: L1-2048-S2-LeelaFarseerT78T79T80-sk16-ep399-S1-UHOx2
+
+training-dataset: /dev/shm/LeelaFarseer-T78juntoaugT79marT80dec.binpack
+early-fen-skipping: 16
+
+start-from-engine-test-net: False
+start-from-model: /root/easy-train-data/experiments/experiment_new-L1-2048-UHOx2/training/run_1/nn-epoch399.nnue
+engine-test-branch: linrock/Stockfish/L1-2048
+nnue-pytorch-branch: linrock/nnue-pytorch/misc-fixes-L1-2048
+
+num-epochs: 800
+lr: 4.375e-4
+gamma: 0.995
+start-lambda: 1.0
+end-lambda: 0.75
+
+network-testing-games-per-round: 1000
+network-testing-threads: 2
+num-workers: 12
+
+build-engine-arch: x86-64-bmi2
+workspace-path: /root/easy-train-data
