@@ -1,0 +1,8 @@
+asciimatics
+cupy-cuda11x
+GPUtil
+numba
+python-chess==0.31.4
+pytorch-lightning==1.9.5
+psutil
+tensorboardx
