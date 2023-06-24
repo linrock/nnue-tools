@@ -1,0 +1,16 @@
+services:
+  nnue-pytorch:
+    restart: no
+    build:
+      dockerfile: ./Dockerfile
+    container_name: nnue-pytorch
+    image: nnue-pytorch
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    volumes:
+      - /dev/shm/:/dev/shm
