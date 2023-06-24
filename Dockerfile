@@ -1,5 +1,6 @@
 FROM nvidia/cuda:11.8.0-devel-ubuntu22.04
 # FROM nvidia/cuda:12.1.0-devel-ubuntu22.04
+# FROM nvcr.io/nvidia/pytorch:23.05-py3
 
 ENV PATH=/usr/local/nvidia/bin:${PATH}
 ENV PATH=/usr/local/cuda/bin:${PATH}
