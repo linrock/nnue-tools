@@ -12,5 +12,8 @@ services:
             - driver: nvidia
               count: all
               capabilities: [gpu]
+    environment:
+      - SSH_AUTH_SOCK=/tmp/ssh-agent
     volumes:
       - /dev/shm/:/dev/shm
+      - ${SSH_AUTH_SOCK}:/tmp/ssh-agent
