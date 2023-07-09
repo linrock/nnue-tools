@@ -7,7 +7,8 @@ default_args = {
     'seed': random.randint(9999, 9_999_999),
     'tui': False,
     'workspace-path': '/root/easy-train-data',
-    'build-engine-arch': 'x86-64-bmi2'
+    'build-engine-arch': 'x86-64-bmi2',
+    'network-testing-book': 'https://github.com/official-stockfish/books/raw/master/UHO_4060_v2.epd.zip',
 }
 
 yaml_config_file = sys.argv[1]
