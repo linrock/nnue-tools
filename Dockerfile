@@ -47,7 +47,9 @@ COPY misc/utils.sh misc/utils.sh
 
 WORKDIR /usr/local/bin
 COPY easy-train.sh .
+COPY fetch-nnue.sh .
 RUN chmod +x easy-train.sh
+RUN chmod +x fetch-nnue.sh
 
 WORKDIR /root
 CMD sleep infinity
