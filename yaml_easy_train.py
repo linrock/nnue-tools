@@ -26,7 +26,11 @@ with open(yaml_config_file, "r") as stream:
         # prepare an easy_train.py command for training
         command = ["python3 easy_train.py"]
         for key,value in sorted(args.items()):
-            command.append(f"  --{key} {value}")
+            if key == "training-dataset" and isinstance(value, list):
+                for dataset_component in value:
+                    command.append(f"  --{key} {dataset_component}")
+            else:
+                command.append(f"  --{key} {value}")
 
         if len(sys.argv) > 2 and sys.argv[2] == "print":
             print(" \\\n".join(command))
