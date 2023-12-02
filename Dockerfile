@@ -6,13 +6,7 @@ FROM nvidia/cuda:12.3.0-devel-ubuntu22.04
 # https://catalog.ngc.nvidia.com/orgs/nvidia/containers/pytorch
 # FROM nvcr.io/nvidia/pytorch:23.11-py3
 
-ENV PATH=/usr/local/nvidia/bin:${PATH}
-ENV PATH=/usr/local/cuda/bin:${PATH}
-ENV LIBRARY_PATH=/usr/local/cuda/lib64:${LIBRARY_PATH}
-ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64:${LD_LIBRARY_PATH}
-
-RUN DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC \
-  apt update && apt install -y \
+RUN apt update -y && apt upgrade -y && apt install -y \
     vim git tig tree gawk cmake tmux wget curl python3 python3-pip
 
 RUN ln -sf python3 /usr/bin/python
@@ -28,17 +22,18 @@ RUN pip3 install --no-cache --upgrade pip setuptools
 
 # Install torch 2.0+
 RUN --mount=type=cache,target=/root/.cache/pip \
-  pip3 install torch==2.0.1+cu118 \
-    --extra-index-url https://download.pytorch.org/whl/cu118
+  pip3 install torch==2.1.1+cu121 \
+    --extra-index-url https://download.pytorch.org/whl/cu121
 
 # Install rest of pip dependencies
 COPY requirements.txt .
 RUN --mount=type=cache,target=/root/.cache/pip \
   pip3 install -r requirements.txt
 
-RUN git clone https://github.com/linrock/nnue-pytorch /root/nnue-pytorch
+# RUN git clone https://github.com/linrock/nnue-pytorch /root/nnue-pytorch
+RUN git clone https://github.com/official-stockfish/nnue-pytorch /root/nnue-pytorch
 WORKDIR /root/nnue-pytorch
-RUN git checkout misc-fixes
+# RUN git checkout misc-fixes
 RUN sh compile_data_loader.bat
 
 WORKDIR /root
