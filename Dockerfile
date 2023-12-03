@@ -43,6 +43,7 @@ RUN echo 'source .bash_profile' >> .bashrc
 
 RUN mkdir misc
 COPY misc/utils.sh misc/utils.sh
+COPY misc/get_native_properties.sh misc/get_native_properties.sh
 
 WORKDIR /usr/local/bin
 COPY easy-train.sh .
