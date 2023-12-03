@@ -1,0 +1,63 @@
+name: L1-256-5stage
+common:
+  nnue-pytorch-branch: linrock/nnue-pytorch/L1-256
+  engine-test-branch: linrock/Stockfish/L1-256
+  start-from-engine-test-net: False
+  lr: 4.375e-4
+  gamma: 0.995
+  start-lambda: 1.0
+  auto-exit-timeout-on-training-finished: 60
+
+experiments:
+  - experiment-name: 256-S1-UHOx2
+    training-dataset:
+     - /root/training-data/S1/UHOx2.binpack
+    # early-fen-skipping: 16
+    lr: 8.75e-4
+    gamma: 0.992
+    end-lambda: 1.0
+    num-epochs: 400
+
+  - experiment-name: 256-S2-LeelaFarseerT77T78T79T80-sk16
+    training-dataset:
+     - /root/training-data/S2/LeelaFarseer.binpack
+     - /root/training-data/S2/test77-nov2021-2tb7p.no-db.min.binpack
+     - /root/training-data/S2/test78-janfeb2022-16tb7p.min.binpack
+     - /root/training-data/S2/test79-apr2022-16tb7p.min.binpack
+     - /root/training-data/S2/test80-dec2022-16tb7p.min.binpack
+    early-fen-skipping: 16
+    start-from-model: /root/easy-train-data/experiments/experiment_256-S1-UHOx2/training/run_0/nn-epoch399.nnue
+    end-lambda: 0.75
+    num-epochs: 800
+
+  - experiment-name: 256-S3-223G-sk20
+    training-dataset:
+     - /root/training-data/S3/dfrc99-16tb7p-eval-filt-v2.min.binpack
+     - /root/training-data/S3/leela96-filt-v2.min.binpack
+     - /root/training-data/S3/test60-octnovdec2020.no-db.min.binpack
+     - /root/training-data/S3/test77-dec2021-16tb7p.no-db.min.binpack
+     - /root/training-data/S3/test77-nov2021-2tb7p.no-db.min.binpack
+     - /root/training-data/S3/test78-janfeb2022-16tb7p.min.binpack
+     - /root/training-data/S3/test78-junjulaug2022-16tb7p.no-db.min.binpack
+     - /root/training-data/S3/test79-apr2022-16tb7p.min.binpack
+     - /root/training-data/S3/test80-apr2022-16tb7p.min.binpack
+     - /root/training-data/S3/test80-dec2022-16tb7p-filter-v6-sk20.min-mar2023.binpack
+     - /root/training-data/S3/test80-feb2023-16tb7p-filter-v6-sk20.min-mar2023.binpack
+    start-from-model: /root/easy-train-data/experiments/experiment_256-S2-LeelaFarseerT80T79T78T77-sk16/training/run_0/nn-epoch799.nnue
+    early-fen-skipping: 20
+    end-lambda: 0.725
+    num-epochs: 800
+
+  - experiment-name: 256-S4-260G-sk24
+    training-dataset:
+      - /root/training-data/leela96-dfrc99-v2-T78juntosepT79mayT80junsepnovjan-v6dd-T80mar23-v6-T60novdecT77decT78aprmayT79aprT80may23.min.binpack
+    early-fen-skipping: 24
+    end-lambda: 0.7
+    num-epochs: 800
+
+  - experiment-name: 256-S5-514G-sk28
+    training-dataset:
+      - /root/training-data/S5-514G.binpcak
+    early-fen-skipping: 28
+    end-lambda: 0.7
+    num-epochs: 1000
