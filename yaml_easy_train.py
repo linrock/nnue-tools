@@ -1,3 +1,4 @@
+from glob import glob
 import random
 import re
 import sys
@@ -28,7 +29,11 @@ with open(yaml_config_file, "r") as stream:
         for key,value in sorted(args.items()):
             if key == "training-dataset" and isinstance(value, list):
                 for dataset_component in value:
-                    command.append(f"  --{key} {dataset_component}")
+                    if "*" in dataset_component:
+                        for glob_match in glob(dataset_component):
+                            command.append(f"  --{key} {glob_match}")
+                    else:
+                        command.append(f"  --{key} {dataset_component}")
             else:
                 command.append(f"  --{key} {value}")
 
