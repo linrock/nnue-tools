@@ -1,14 +1,20 @@
 from glob import glob
 import random
 import re
+import subprocess
 import sys
 import yaml
+
+best_engine_arch = subprocess.check_output(
+    "sh /root/misc/get_native_properties.sh | awk '{print $1}'",
+    shell=True
+).decode().strip()
 
 default_args = {
     'seed': random.randint(9999, 9_999_999),
     'tui': False,
     'workspace-path': '/root/easy-train-data',
-    'build-engine-arch': 'x86-64-bmi2',
+    'build-engine-arch': best_engine_arch,
     'network-testing-book': 'https://github.com/official-stockfish/books/raw/master/UHO_Lichess_4852_v1.epd.zip',
 }
 
