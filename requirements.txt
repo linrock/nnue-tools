@@ -1,5 +1,5 @@
 asciimatics
-cupy-cuda11x
+cupy-cuda12x
 GPUtil
 matplotlib
 numba
