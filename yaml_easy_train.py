@@ -19,33 +19,47 @@ default_args = {
 }
 
 yaml_config_file = sys.argv[1]
-with open(yaml_config_file, "r") as stream:
-    try:
-        args = yaml.safe_load(stream)
-        args = {**default_args, **args}
+with open(yaml_config_file, "r") as f:
+    args = yaml.safe_load(f)
+    args = {**default_args, **args}
 
-        # if config filename contains gpu ids, automatically use them
-        gpus_from_filename = re.search(r"gpu(\d+)", yaml_config_file)
-        if gpus_from_filename:
-            gpus_str = ",".join(list(gpus_from_filename.group(1)))
-            args["gpus"] = gpus_str
+# if config filename contains gpu ids, automatically use them
+gpus_from_filename = re.search(r"gpu(\d+)", yaml_config_file)
+if gpus_from_filename:
+    gpus_str = ",".join(list(gpus_from_filename.group(1)))
+    args["gpus"] = gpus_str
 
-        # prepare an easy_train.py command for training
-        command = ["python3 easy_train.py"]
-        for key,value in sorted(args.items()):
-            if key == "training-dataset" and isinstance(value, list):
-                for dataset_component in value:
+# prepare an easy_train.py command for training
+command = ["python3 easy_train.py"]
+for key,value in sorted(args.items()):
+    if key == "training-dataset":
+        if isinstance(value, list):
+            # list of files with support for wildcard *
+            filenames = value
+            for dataset_component in filenames:
+                if "*" in dataset_component:
+                    for glob_match in glob(dataset_component):
+                        command.append(f"  --{key} {glob_match}")
+                else:
+                    command.append(f"  --{key} {dataset_component}")
+        elif isinstance(value, dict):
+            #   /data/hse-v1/:
+            #     leela96-filt-v2.min.high-simple-eval-1k.min-v2.binpack
+            for basepath,filenames in value.items():
+                for filename in filenames:
+                    dataset_component = f"{basepath}{filename}"
                     if "*" in dataset_component:
                         for glob_match in glob(dataset_component):
                             command.append(f"  --{key} {glob_match}")
                     else:
                         command.append(f"  --{key} {dataset_component}")
-            else:
-                command.append(f"  --{key} {value}")
-
-        if len(sys.argv) > 2 and sys.argv[2] == "print":
-            print(" \\\n".join(command))
         else:
-            print(" ".join(command))
-    except yaml.YAMLError as exc:
-        print(exc)
+            command.append(f"  --{key} {value}")
+    else:
+        command.append(f"  --{key} {value}")
+
+# pretty print for logging and debugging
+if len(sys.argv) > 2 and sys.argv[2] == "print":
+    print(" \\\n".join(command))
+else:
+    print(" ".join(command))
