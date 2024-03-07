@@ -4,7 +4,7 @@
 # FROM nvidia/cuda:12.3.0-devel-ubuntu22.04
 
 # https://catalog.ngc.nvidia.com/orgs/nvidia/containers/pytorch
-FROM nvcr.io/nvidia/pytorch:24.01-py3
+FROM nvcr.io/nvidia/pytorch:24.02-py3
 
 RUN apt update -y && apt upgrade -y && apt install -y \
     vim git tig tree gawk cmake tmux wget curl python3 python3-pip
