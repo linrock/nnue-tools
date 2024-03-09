@@ -1,6 +1,12 @@
 #!/bin/bash
 
-binpack=test77-2021-12-dec-16tb7p.v6-dd.min.binpack
+if [ $# -ne 1 ]; then
+  echo "Usage: download_binpack.sh <filename:binpack>"
+  exit 0
+fi
+
+binpack=$1
+# binpack=test77-2021-12-dec-16tb7p.v6-dd.min.binpack
 
 if [ -f $binpack ]; then
   echo binpack already exists
@@ -18,7 +24,12 @@ fi
 source_url=https://huggingface.co/datasets/linrock/$source_repo/resolve/main/$binpack.zst
 
 echo $binpack
-echo   downloading from $source_url ...
+echo downloading from:
+echo $source_url
+echo ...
+
+command="curl -L $source_url | zstd -d --stdout -o $binpack"
+echo $command
 
 curl -L $source_url | zstd -d --stdout -o $binpack
 ls -lth $binpack
