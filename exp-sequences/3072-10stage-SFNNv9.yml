@@ -1,0 +1,176 @@
+name: L1-3072--10stage-SFNNv9
+
+defaults:
+  start-from-engine-test-net: False
+  nnue-pytorch-branch: linrock/nnue-pytorch/L1-3072
+  engine-test-branch: linrock/Stockfish/L1-3072
+  num-epochs: 800
+  lr: 4.375e-4
+  gamma: 0.995
+  start-lambda: 1.0
+
+experiments:
+  # S1 - UHOx2-wIsRight-multinet-dfrc-n5000
+  - experiment-name: UHOx2-wIsRight-multinet-dfrc-n5000
+    num-epochs: 400
+    lr: 8.75e-4
+    gamma: 0.992
+    end-lambda: 1.0
+    training-dataset:
+      - /data/UHOx2-wIsRight-multinet-dfrc-n5000.binpack
+
+  # S2 - T60T70wIsRightFarseerT60T74T75T76 sk12
+  - experiment-name: L1-3072-S2-LeelaFarseer-sk12-S1-ep379-UHOx2-wIsRight-multinet-dfrc-n5000
+    end-lambda: 0.75
+    early-fen-skipping: 12
+    training-dataset:
+      - /data/T60T70wIsRightFarseerT60T74T75T76.binpack
+
+  # S3 - leela93-v1 202G sk16
+  - experiment-name: L1-3072-S3-leela93-v1-202G-sk16-S2-ep499-LeelaFarseer-sk12-S1-ep379-UHOx2-wIsRight-multinet-dfrc-n5000
+    end-lambda: 0.725
+    early-fen-skipping: 16
+    training-dataset:
+      - /data/leela93-v1-dfrc99-v2-T78juntosepT80jan-v6dd-T78janfebT79aprT80aprmay.min.binpack
+
+  # S4 - leela96-v2 260G sk20
+  - experiment-name: L1-3072-S4-260G-sk20-S3-leela93-v1-202G-sk16-S2-ep499-LeelaFarseer-sk12-S1-ep379-UHOx2-wIsRight-multinet-dfrc-n5000
+    end-lambda: 0.7
+    early-fen-skipping: 20
+    training-dataset:
+      - /data/leela96-dfrc99-v2-T78juntosepT79mayT80junsepnovjan-v6dd-T80mar23-v6-T60novdecT77decT78aprmayT79aprT80may23.min.binpack
+
+  # S5 - 328G
+  - experiment-name: L1-3072-S5-328G-final-S4-260G-sk20-S3-leela93-v1-202G-sk16-S2-ep499-LeelaFarseer-sk12-S1-ep379-UHOx2-wIsRight-multinet-dfrc-n5000
+    end-lambda: 0.7
+    early-fen-skipping: 28
+    training-dataset:
+      - /data/leela96-dfrc99-v2-T60novdecT77decT78jantosepT79aprmayT80juntonovjan-v6dd-T80febtomay2023.min.binpack
+
+  # S6 - 514G
+  - experiment-name: 3072--S6-g0-r21-514G-sk28--S5-ep679
+    nnue-pytorch-branch: linrock/nnue-pytorch/3072-ranger21-torch-compile
+    end-lambda: 0.7
+    early-fen-skipping: 28
+    training-dataset:
+      - /data/514G.binpack
+
+  # S7 - b1a57edbea57 dataset
+  - experiment-name: 3072--S7-g7-more-wdl-skip-10p-more-loss-high-q-sk28--S6-ep779-1ee1aba5ed
+    nnue-pytorch-branch: linrock/nnue-pytorch/3072-r21-more-wdl-skip-10p-more-loss-high-q-torch-compile
+    end-lambda: 0.7
+    early-fen-skipping: 28
+    training-dataset:
+      - /data/514G.binpack
+      - /data/test80-aug2023-2tb7p.v6.min.binpack
+      - /data/test80-sep2023-2tb7p.binpack
+      - /data/test80-oct2023-2tb7p.binpack
+      - /data/test80-nov2023-2tb7p.binpack
+      - /data/test80-dec2023-2tb7p.binpack
+
+  # S8 - nn-3182bacdfd54.nnue - https://tests.stockfishchess.org/tests/view/65cf89621d8e83c78bfd5ba0
+  - experiment-name: 3072--S8-g7-more-wdl-skip-15p-more-loss-high-q-sk28--S8-ep799
+    nnue-pytorch-branch: linrock/nnue-pytorch/3072-r21-more-wdl-skip-15p-more-loss-high-q-torch-compile
+    end-lambda: 0.7
+    early-fen-skipping: 28
+    training-dataset:
+      - /data/S5-514G.binpack
+      - /data/test80-aug2023-2tb7p.v6.min.binpack
+      - /data/test80-sep2023-2tb7p.binpack
+      - /data/test80-oct2023-2tb7p.binpack
+      - /data/test80-nov2023-2tb7p.binpack
+      - /data/test80-dec2023-2tb7p.binpack
+
+  # S9 - nn-979b0339f40f.nnue - https://tests.stockfishchess.org/tests/view/65f0c5c80ec64f0526c46a13
+  - experiment-name: 3072--S9-dfrc0-to-feb2024-min-v2-skip-more-wdl-see-ge0-15p-more-loss-high-q-sk28-l8
+    nnue-pytorch-branch: linrock/nnue-pytorch/3072-r21-skip-more-wdl-see-ge0-15p-more-loss-high-q-torch-compile-more
+    start-lambda: 0.8
+    end-lambda: 0.7
+    early-fen-skipping: 28
+    training-dataset:
+      /data/:
+        - leela96.v2.min.binpack
+        - test60-2021-11-nov-12tb7p.binpack.min-v2.binpack
+        - test60-2021-12-dec-12tb7p.binpack.min-v2.binpack
+        - test77-2021-12-dec-16tb7p.min.binpack
+        - test78-2022-01-to-05-jantomay-16tb7p.v6-dd.min.binpack
+        - test78-2022-06-to-09-juntosep-16tb7p.v6-dd.min.binpack
+        - test79-2022-04-apr-12tb7p.binpack.min-v2.binpack
+        - test79-2022-05-may-12tb7p.binpack.min-v2.binpack
+
+        - test80-2022-06-jun-16tb7p.v6-dd.min.binpack
+        - test80-2022-07-jul-16tb7p.v6-dd.min.binpack
+        - test80-2022-08-aug-16tb7p.v6-dd.min.binpack
+        - test80-2022-09-sep-16tb7p.v6-dd.min.binpack
+        - test80-2022-10-oct-16tb7p.v6-dd.binpack.min-v2.binpack
+        - test80-2022-11-nov-16tb7p.v6-dd.min.binpack
+
+        - test80-2023-01-jan-16tb7p.v6-sk20.min.binpack
+        - test80-2023-02-feb-16tb7p.v6-sk20.min.binpack
+        - test80-2023-03-mar-2tb7p.v6-sk16.min.binpack
+        - test80-2023-04-apr-2tb7p.v6-sk16.min.binpack
+        - test80-2023-05-may-2tb7p.v6.min.binpack
+
+        # https://github.com/official-stockfish/Stockfish/pull/4782
+        - test80-2023-06-jun-2tb7p.binpack.min-v2.binpack
+        - test80-2023-07-jul-2tb7p.binpack.min-v2.binpack
+
+        # https://github.com/official-stockfish/Stockfish/pull/4972
+        - test80-2023-08-aug-2tb7p.v6.min.binpack
+        - test80-2023-09-sep-2tb7p.binpack.min-v2.binpack
+        - test80-2023-10-oct-2tb7p.binpack.min-v2.binpack
+
+        # https://github.com/official-stockfish/Stockfish/pull/5056
+        - test80-2023-11-nov-2tb7p.binpack.min-v2.binpack
+        - test80-2023-12-dec-2tb7p.binpack.min-v2.binpack
+
+        # new data
+        - test80-2024-01-jan-2tb7p.binpack.min-v2.binpack
+        - test80-2024-02-feb-2tb7p.binpack.min-v2.binpack
+
+  # S10 - nn-8747f5ce199f.nnue - https://tests.stockfishchess.org/tests/view/65f32e460ec64f0526c48dbc
+  - experiment-name: 3072--S10-dfrc0-to-feb2024-more-filt-min-v2-skip-more-wdl-see-ge0-15p-more-loss-high-q-sk28-l8
+    nnue-pytorch-branch: linrock/nnue-pytorch/3072-r21-skip-more-wdl-see-ge0-15p-more-loss-high-q-torch-compile-more
+    start-lambda: 0.8
+    end-lambda: 0.7
+    early-fen-skipping: 28
+    training-dataset:
+      /data/:
+        - leela96.v2.min.binpack
+
+        - test60-2021-11-12-novdec-12tb7p.v6-dd.min.binpack
+        - test77-2021-12-dec-16tb7p.v6-dd.min.binpack
+        - test78-2022-01-to-05-jantomay-16tb7p.v6-dd.min.binpack
+        - test78-2022-06-to-09-juntosep-16tb7p.v6-dd.min.binpack
+        - test79-2022-04-apr-16tb7p.v6-dd.min.binpack
+        - test79-2022-05-may-16tb7p.v6-dd.min.binpack
+
+        - test80-2022-06-jun-16tb7p.v6-dd.min.binpack
+        - test80-2022-07-jul-16tb7p.v6-dd.min.binpack
+        - test80-2022-08-aug-16tb7p.v6-dd.min.binpack
+        - test80-2022-09-sep-16tb7p.v6-dd.min.binpack
+        - test80-2022-10-oct-16tb7p.v6-dd.binpack.min-v2.binpack
+        - test80-2022-11-nov-16tb7p.v6-dd.min.binpack
+
+        - test80-2023-01-jan-16tb7p.v6-sk20.min.binpack
+        - test80-2023-02-feb-16tb7p.v6-sk20.min.binpack
+        - test80-2023-03-mar-2tb7p.v6-sk16.min.binpack
+        - test80-2023-04-apr-2tb7p.v6-sk16.min.binpack
+        - test80-2023-05-may-2tb7p.v6.min.binpack
+
+        # https://github.com/official-stockfish/Stockfish/pull/4782
+        - test80-2023-06-jun-2tb7p.binpack.min-v2.binpack
+        - test80-2023-07-jul-2tb7p.binpack.min-v2.binpack
+
+        # https://github.com/official-stockfish/Stockfish/pull/4972
+        - test80-2023-08-aug-2tb7p.v6.min.binpack
+        - test80-2023-09-sep-2tb7p.binpack.min-v2.binpack
+        - test80-2023-10-oct-2tb7p.binpack.min-v2.binpack
+
+        # https://github.com/official-stockfish/Stockfish/pull/5056
+        - test80-2023-11-nov-2tb7p.binpack.min-v2.binpack
+        - test80-2023-12-dec-2tb7p.binpack.min-v2.binpack
+
+        # new data
+        - test80-2024-01-jan-2tb7p.binpack.min-v2.binpack
+        - test80-2024-02-feb-2tb7p.binpack.min-v2.binpack
