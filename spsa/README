@@ -1,0 +1,10 @@
+Scripts to prepare spsa-tuned nets based on:
+
+Update NNUE architecture to SFNNv9 with larger L1 size of 3072
+https://github.com/official-stockfish/Stockfish/pull/5149
+
+
+Use this to apply spsa params from a fishtest spsa test page and
+export a .nnue file:
+
+./3072_fetch_and_apply_spsa_params_then_export_nnue.sh
