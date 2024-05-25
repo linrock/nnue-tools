@@ -14,7 +14,9 @@ To use this, make sure Nvidia drivers, [Docker](https://docs.docker.com/engine/i
 and the [Nvidia container toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html) are installed.
 
 See [server_setup.sh](./server_setup.sh) for commands to install dependencies
-from a clean Ubuntu server environment.
+from a clean Ubuntu server environment, should be run with sudo rights.
+This will enable docker as a non-root user, as described here
+https://docs.docker.com/engine/install/linux-postinstall/.
 
 Afterwards, use these scripts to prepare and run the container image.
 
