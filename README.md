@@ -29,7 +29,7 @@ Afterwards, use these scripts to prepare and run the container image.
 ### Download training data
 
 See training data files in this July 2022 PR:
-https://github.com/official-stockfish/Stockfish/pull/4100
+https://github.com/official-stockfish/Stockfish/pull/4100 or https://www.kaggle.com/linrock/datasets.
 
 Info on how the training data is generated is in the [nnue-pytorch wiki](https://github.com/glinscott/nnue-pytorch/wiki/Training-datasets#lc0-data-converter).
 
@@ -50,3 +50,14 @@ curl -H "Authorization: Bearer <access_token>" \
   "https://www.googleapis.com/drive/v3/files/<file_id>?alt=media" \
   -o output.binpack
 ```
+
+##### Download datasets from kaggle
+
+- Install `kaggle`
+  ```
+  pipx install kaggle
+  ```
+- Go to https://www.kaggle.com/<USER_NAME>/account
+- Create a New API Token in the "API" section
+- place your downloaded file at ~/.kaggle/kaggle.json
+- `kaggle datasets download linrock/<DATASET_NAME>`
