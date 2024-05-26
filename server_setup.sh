@@ -32,7 +32,9 @@ sudo apt install -y docker-ce docker-ce-cli
 sudo apt install -y nvidia-docker2
 
 # Enable running docker commands without sudo
+sudo groupadd docker
 sudo usermod -aG docker $(whoami)
+newgrp docker
 
 # Need to restart docker after installing nvidia-docker2 package
 sudo systemctl restart docker
