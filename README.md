@@ -54,7 +54,7 @@ There are multiple ways to get your training data into the container:
 
 - `/dev/shm` is a shared memory directory where files can temporarily be stored for fast access.
 - `/mnt` typically for mounting a large storage volume, like an external hard drive.
-- `training-data` and `easy-train-data` can also be used to store training data.
+- `training-data` and `easy-train-data` can also be used to store training data, though their primary purpose is binpack scripts and the directory structure for nnue-pytorch, respectively.
 - `/media` is a directory that can be used to mount external storage devices as well.
 
 
