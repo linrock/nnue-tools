@@ -25,6 +25,38 @@ Afterwards, use these scripts to prepare and run the container image.
 ./docker_run.sh     # access the command-line within the container
 ```
 
+The following files will be copied into the container image:
+```
+requirements.txt
+yaml_easy_train.py
+.bash_profile
+misc/utils.sh
+misc/get_native_properties.sh
+easy-train.sh
+fetch-nnue.sh
+```
+
+
+### Running the container
+
+A few directories are mounted into the container to share data between the host and container.
+
+```
+training-data
+easy-train-data
+config
+
+/dev/shm
+/mnt
+```
+
+There are multiple ways to get your training data into the container:
+
+- `/dev/shm` is a shared memory directory where files can temporarily be stored for fast access.
+- `/mnt` typically for mounting a large storage volume, like an external hard drive.
+- `training-data` and `easy-train-data` can also be used to store training data.
+- `/media` is a directory that can be used to mount external storage devices as well.
+
 
 ### Download training data
 

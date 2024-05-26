@@ -8,6 +8,7 @@ docker_container_id=$(docker run -d \
   --mount type=bind,source="$(pwd)"/config,target=/root/config \
   --mount type=bind,source=/dev/shm,target=/dev/shm \
   --mount type=bind,source=/mnt,target=/mnt \
+  --mount type=bind,source=/media,target=/media \
   nnue-pytorch)
 
 # Copy a usable run_easy_train.sh script in at runtime
